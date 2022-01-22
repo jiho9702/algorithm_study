@@ -1,41 +1,32 @@
-def average(N, n):
-    return round(sum(N)//n, 1)
+import sys
+from collections import Counter
 
-def center(N):
-    mid = len(N) // 2
-    return N[mid]
+def average(N, n):
+    return round(sum(N)/n)
+
+def center(N, n):
+    N.sort()
+    return N[n//2]
 
 def frequency(N):
-    number = list(set(N))
-    max_fre = []
-    max_cnt = 0
-    for i in number:
-        
-        if max_cnt == N.count(i):
-            max_fre.append(i)
-        elif max_cnt < N.count(i):
-            max_fre = []
-            max_fre.append(i)
-            max_cnt = N.count(i)
-    print(max_fre)
-    if len(max_fre) > 1:
-        max_fre.sort()
-        return(max_fre[1])
+    N.sort()
+    cnt_li = Counter(N).most_common()
+    if len(cnt_li) > 1 and cnt_li[0][1]==cnt_li[1][1]:
+        return(cnt_li[1][0])
     else:
-        return(max_fre[0])
+        return(cnt_li[0][0])
 
 def arrange(N):
+    N.sort()
     return (max(N) - min(N))
 
 
-n = int(input())
+n = int(sys.stdin.readline())
 li = []
 for _ in range(n):
-    li.append(int(input()))
-
-li.sort()
+    li.append(int(sys.stdin.readline()))
 
 print(average(li, n))
-print(center(li))
+print(center(li, n))
 print(frequency(li))
 print(arrange(li))
